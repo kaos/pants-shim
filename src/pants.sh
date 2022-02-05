@@ -29,6 +29,15 @@ function find_pants_script {
 
 function expand_path_parameters {
     for arg; do
+        case "${arg}" in
+            help|help-advanced|--help|--help-advanced)
+                # No parameter path expansion for help invocations.
+                echo "$@"
+                return 0
+        esac
+    done
+
+    for arg; do
         local opt=
         local val="${arg#*=}"
 
@@ -51,7 +60,6 @@ function expand_path_parameters {
             echo "${arg}"
         fi
     done
-    set +x
 }
 
 find_pants_script "${PWD}"
